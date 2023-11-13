@@ -63,11 +63,11 @@ public class WmWarehouseMobController extends BaseController {
         WmStorageArea area = null;
 
         if(StringUtils.isNotNull(position.getAreaId())){
-            area = wmStorageAreaService.selectWmStorageAreaByAreaId(area.getAreaId());
+            area = wmStorageAreaService.selectWmStorageAreaByAreaId(position.getAreaId());
         }
 
         if(StringUtils.isNotNull(position.getAreaCode())){
-            area = wmStorageAreaService.selectWmStorageAreaByAreaCode(area.getAreaCode());
+            area = wmStorageAreaService.selectWmStorageAreaByAreaCode(position.getAreaCode());
         }
 
         if(area != null){
