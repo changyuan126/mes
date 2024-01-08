@@ -34,7 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectDvMachineryList" parameterType="DvMachinery" resultMap="DvMachineryResult">
         <include refid="selectDvMachineryVo"/>
-        <where>  
+        <where>
+            <if test="machineryId != null"> and machinery_id = #{machineryId}</if>
             <if test="machineryCode != null  and machineryCode != ''"> and machinery_code = #{machineryCode}</if>
             <if test="machineryName != null  and machineryName != ''"> and machinery_name like concat('%', #{machineryName}, '%')</if>
             <if test="machineryBrand != null  and machineryBrand != ''"> and machinery_brand = #{machineryBrand}</if>

@@ -1,6 +1,7 @@
 package com.ktg.mes.dv.controller;
 
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.collection.CollUtil;
@@ -83,9 +84,12 @@ public class DvMachineryTypeController extends BaseController
     @PreAuthorize("@ss.hasPermi('mes:dv:machinerytype:add')")
     @Log(title = "设备类型", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody DvMachineryType dvMachineryType)
-    {
-        dvMachineryType.setMachineryTypeCode(autoCodeUtil.genSerialCode(UserConstants.MACHINERY_TYPE_CODE,null));
+    public AjaxResult add(@RequestBody DvMachineryType dvMachineryType) {
+        if (Objects.isNull(dvMachineryType.getParentTypeId()) ||
+                Objects.equals(dvMachineryType.getParentTypeId(), 0L)) {
+            return AjaxResult.error("必须指定上级类型！");
+        }
+        dvMachineryType.setMachineryTypeCode(autoCodeUtil.genSerialCode(UserConstants.MACHINERY_TYPE_CODE, null));
         return toAjax(dvMachineryTypeService.insertDvMachineryType(dvMachineryType));
     }
 
@@ -105,7 +109,7 @@ public class DvMachineryTypeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('mes:dv:machinerytype:remove')")
     @Log(title = "设备类型", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{machineryTypeIds}")
+    @DeleteMapping("/{machineryTypeIds}")
     public AjaxResult remove(@PathVariable Long[] machineryTypeIds)
     {
         for (Long typeId:machineryTypeIds
