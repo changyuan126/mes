@@ -1,6 +1,6 @@
 package com.ktg.common.constant;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
+//import org.omg.CORBA.PUBLIC_MEMBER;
 
 /**
  * 用户常量信息
