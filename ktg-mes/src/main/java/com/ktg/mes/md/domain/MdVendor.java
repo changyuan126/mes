@@ -39,15 +39,12 @@ public class MdVendor extends BaseEntity
     private String vendorDes;
 
     /** 供应商LOGO地址 */
-    @Excel(name = "供应商LOGO地址")
     private String vendorLogo;
 
     /** 供应商等级 */
-    @Excel(name = "供应商等级")
     private String vendorLevel;
 
     /** 供应商评分 */
-    @Excel(name = "供应商评分")
     private Long vendorScore;
 
     /** 供应商地址 */
@@ -95,7 +92,6 @@ public class MdVendor extends BaseEntity
     private String creditCode;
 
     /** 是否启用 */
-    @Excel(name = "是否启用")
     private String enableFlag;
 
     /** 预留字段1 */

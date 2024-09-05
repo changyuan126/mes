@@ -66,6 +66,10 @@ public class MdVendorController extends BaseController
         util.exportExcel(response, list, "供应商数据");
     }
 
+    /**
+     * 下载导入模板
+     * @param response
+     */
     @PostMapping("/importTemplate")
     public void importTemplate(HttpServletResponse response)
     {
@@ -74,8 +78,15 @@ public class MdVendorController extends BaseController
     }
 
 
+    /**
+     * 从模板导入供应商数据
+     * @param file
+     * @param updateSupport
+     * @return
+     * @throws Exception
+     */
     @Log(title = "供应商", businessType = BusinessType.IMPORT)
-    @PreAuthorize("@ss.hasPermi('system:user:import')")
+    @PreAuthorize("@ss.hasPermi('mes:md:vendor:import')")
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {

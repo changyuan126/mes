@@ -39,11 +39,9 @@ public class MdClient extends BaseEntity
     private String clientDes;
 
     /** 客户LOGO地址 */
-    @Excel(name = "客户LOGO地址")
     private String clientLogo;
 
     /** 客户类型 */
-    @Excel(name = "客户类型")
     private String clientType;
 
     /** 客户地址 */
@@ -91,11 +89,9 @@ public class MdClient extends BaseEntity
     private String creditCode;
 
     /** 是否启用 */
-    @Excel(name = "是否启用")
     private String enableFlag;
 
     /** 预留字段1 */
-    @Excel(name = "预留字段1")
     private String attr1;
 
     /** 预留字段2 */

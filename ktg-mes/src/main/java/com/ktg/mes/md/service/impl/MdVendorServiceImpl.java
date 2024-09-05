@@ -8,6 +8,8 @@ import com.ktg.common.exception.ServiceException;
 import com.ktg.common.utils.DateUtils;
 import com.ktg.common.utils.StringUtils;
 import com.ktg.common.utils.bean.BeanValidators;
+import com.ktg.mes.wm.utils.WmBarCodeUtil;
+import com.ktg.system.strategy.AutoCodeUtil;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,12 @@ public class MdVendorServiceImpl implements IMdVendorService
 
     @Autowired
     protected Validator validator;
+
+    @Autowired
+    private WmBarCodeUtil barCodeUtil;
+
+    @Autowired
+    private AutoCodeUtil autoCodeUtil;
 
     /**
      * 查询供应商
@@ -103,7 +111,10 @@ public class MdVendorServiceImpl implements IMdVendorService
                 MdVendor v = mdVendorMapper.checkVendorCodeUnique(vendor);
                 if(StringUtils.isNull(v)){
                     BeanValidators.validateWithException(validator, vendor);
+                    String vendorCode = autoCodeUtil.genSerialCode(UserConstants.VENDOR_CODE,"");
+                    vendor.setVendorCode(vendorCode);
                     this.insertMdVendor(vendor);
+                    barCodeUtil.generateBarCode(UserConstants.BARCODE_TYPE_VENDOR,vendor.getVendorId(),vendor.getVendorCode(),vendor.getVendorName());
                     successNum++;
                 }else if (isUpdateSupport){
                     BeanValidators.validateWithException(validator, vendor);
@@ -128,7 +139,7 @@ public class MdVendorServiceImpl implements IMdVendorService
             }
             else
             {
-                successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+                successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条");
             }
         }
         return successMsg.toString();

@@ -2,6 +2,7 @@ package com.ktg.mes.md.service;
 
 import java.util.List;
 import com.ktg.mes.md.domain.MdClient;
+import com.ktg.mes.md.domain.MdVendor;
 
 /**
  * 客户Service接口
@@ -64,4 +65,15 @@ public interface IMdClientService
      * @return 结果
      */
     public int deleteMdClientByClientId(Long clientId);
+
+
+    /**
+     * 导入客户信息
+     * @param clientList
+     * @param isUpdateSupport
+     * @param operName
+     * @return
+     */
+    public String importClient(List<MdClient> clientList, Boolean isUpdateSupport, String operName);
+
 }

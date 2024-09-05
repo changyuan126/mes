@@ -85,6 +85,8 @@ public class UserConstants
     /**
      * 各种业务单据的内定自动编码规则标识
      */
+    public static final String VENDOR_CODE = "VENDOR_CODE";
+    public static final String CLIENT_CODE = "CLIENT_CODE";
     public static final String ITEM_TYPE_CODE ="ITEM_TYPE_CODE";
     public static final String ITEM_CODE ="ITEM_CODE";
     public static final String MACHINERY_TYPE_CODE="MACHINERY_TYPE_CODE";

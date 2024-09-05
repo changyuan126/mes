@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ktg.common.constant.UserConstants;
+import com.ktg.mes.md.domain.MdVendor;
 import com.ktg.mes.wm.utils.WmBarCodeUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.ktg.mes.md.domain.MdClient;
 import com.ktg.mes.md.service.IMdClientService;
 import com.ktg.common.utils.poi.ExcelUtil;
 import com.ktg.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 客户Controller
@@ -63,6 +65,39 @@ public class MdClientController extends BaseController
         ExcelUtil<MdClient> util = new ExcelUtil<MdClient>(MdClient.class);
         util.exportExcel(response, list, "客户数据");
     }
+
+
+    /**
+     * 下载导入模板
+     * @param response
+     */
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response)
+    {
+        ExcelUtil<MdClient> util = new ExcelUtil<MdClient>(MdClient.class);
+        util.importTemplateExcel(response, "客户数据");
+    }
+
+
+    /**
+     * 从模板导入客户数据
+     * @param file
+     * @param updateSupport
+     * @return
+     * @throws Exception
+     */
+    @Log(title = "客户", businessType = BusinessType.IMPORT)
+    @PreAuthorize("@ss.hasPermi('mes:md:client:import')")
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<MdClient> util = new ExcelUtil<MdClient>(MdClient.class);
+        List<MdClient> clientList = util.importExcel(file.getInputStream());
+        String operName = getUsername();
+        String message = mdClientService.importClient(clientList,updateSupport,operName);
+        return AjaxResult.success(message);
+    }
+
 
     /**
      * 获取客户详细信息
@@ -132,4 +167,8 @@ public class MdClientController extends BaseController
     {
         return toAjax(mdClientService.deleteMdClientByClientIds(clientIds));
     }
+
+
+
+
 }

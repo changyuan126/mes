@@ -11,6 +11,7 @@ import com.ktg.mes.wm.domain.WmBarcode;
 import com.ktg.mes.wm.service.IWmBarcodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -106,4 +107,18 @@ public class WmBarcodeController extends BaseController
     {
         return toAjax(wmBarcodeService.deleteWmBarcodeByBarcodeIds(barcodeIds));
     }
+
+    /**
+     * 获取某个对象的二维码地址
+     * @return
+     */
+    @GetMapping("/getBarcodeUrl")
+    public AjaxResult getBarcodeUrl(WmBarcode wmBarcode){
+        List<WmBarcode> list = wmBarcodeService.selectWmBarcodeList(wmBarcode);
+        if(!CollectionUtils.isEmpty(list)){
+            return AjaxResult.success(list.get(0));
+        }
+        return AjaxResult.success();
+    }
+
 }
