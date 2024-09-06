@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="safeStockFlag"        column="safe_stock_flag"        />
 		<result property="minStock"        column="min_stock"        />
 		<result property="maxStock"        column="max_stock"        />
+		<result property="highValue"        column="high_value"        />
 		<result property="attr1"        column="attr1"        />
 		<result property="attr2"        column="attr2"        />
 		<result property="attr3"        column="attr3"        />
@@ -31,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectMdItemVo">
         select item_id, item_code, item_name, specification, unit_of_measure, item_or_product,
-        item_type_id,item_type_code,item_type_name,enable_flag,safe_stock_flag,min_stock,max_stock, create_by, create_time, remark
+        item_type_id,item_type_code,item_type_name,enable_flag,safe_stock_flag,min_stock,max_stock,high_value, create_by, create_time, remark
 		from md_item
     </sql>
 	
@@ -86,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			safe_stock_flag,
 			<if test="safeStockFlag =='Y'.toString()">min_stock,</if>
 			<if test="safeStockFlag =='Y'.toString()">max_stock,</if>
+			<if test="highValue !=null and highValue !=''">#{high_value},</if>
 			<if test="remark !=null and remark !=''">remark,</if>
 			<if test="attr1 !=null and attr1 !=''">attr1,</if>
 			<if test="attr2 !=null and attr2 !=''">attr2,</if>
@@ -107,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{safeStockFlag},
 			<if test="safeStockFlag =='Y'.toString() and minStock !=null ">#{minStock},</if>
 			<if test="safeStockFlag =='Y'.toString() and safeStockFlag !=null ">#{maxStock},</if>
+			<if test="highValue !=null and highValue !=''">#{highValue},</if>
 			<if test="remark !=null and remark !=''">#{remark},</if>
 			<if test="attr1 !=null and attr1 !=''">#{attr1},</if>
 			<if test="attr2 !=null and attr2 !=''">#{attr2},</if>
@@ -131,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="safeStockFlag !=null and safeStockFlag !=''">safe_stock_flag = #{safeStockFlag},</if>
 			<if test="minStock !=null and minStock !=''">min_stock = #{minStock},</if>
 			<if test="maxStock !=null and maxStock !=''">max_stock = #{maxStock},</if>
+			<if test="highValue !=null and highValue !=''">high_value = #{highValue},</if>
 			<if test="remark !=null and remark !=''">remark = #{remark},</if>
 			<if test="attr1 !=null and attr1 !=''">attr1=#{attr1},</if>
 			<if test="attr2 !=null and attr2 !=''">attr2=#{attr2},</if>

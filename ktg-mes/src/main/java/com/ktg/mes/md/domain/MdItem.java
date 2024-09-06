@@ -24,6 +24,7 @@ public class MdItem extends BaseEntity {
     private String safeStockFlag;
     private Double minStock;
     private Double maxStock;
+    private String hightValue;
     private String attr1;
     private String attr2;
     private String attr3;
@@ -139,6 +140,14 @@ public class MdItem extends BaseEntity {
 
     public void setMaxStock(Double maxStock) {
         this.maxStock = maxStock;
+    }
+
+    public String getHightValue() {
+        return hightValue;
+    }
+
+    public void setHightValue(String hightValue) {
+        this.hightValue = hightValue;
     }
 
     public String getAttr1() {
