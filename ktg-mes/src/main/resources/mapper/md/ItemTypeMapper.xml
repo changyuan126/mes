@@ -83,6 +83,18 @@
         <include refid="selectItemTypeVo"/>
         where item_type_name=#{itemTypeName} and parent_type_id = #{parentTypeId} limit 1
     </select>
+
+    <select id="selectItemTypeByName" parameterType="String" resultMap="ItemTypeResult">
+        select *
+        from (
+                 select CONCAT((select group_concat(item_type_name separator '/')
+                                from md_item_type b
+                                where FIND_IN_SET(CAST(item_type_id as CHAR),a.ancestors)>0),'/',a.item_type_name) as fullType,a.*
+                 from md_item_type a
+             ) t
+        where fullType = #{itemTypeName} or t.item_type_name = #{itemTypeName}
+    </select>
+
     <select id="checkItemTypeCodeUnique" resultMap="ItemTypeResult">
         <include refid="selectItemTypeVo"/>
         where item_type_code=#{itemTypeCode} and parent_type_id = #{parentTypeId} limit 1

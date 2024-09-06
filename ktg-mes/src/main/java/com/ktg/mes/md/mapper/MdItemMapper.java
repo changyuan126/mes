@@ -19,6 +19,9 @@ public interface MdItemMapper {
     public List<MdItem> selectMdItemAll();
 
 
+    public List<MdItem> getExeportList(MdItem mdItem);
+
+
     /**
      * 根据物料ID查询物料
      * @param itemId

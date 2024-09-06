@@ -8,6 +8,7 @@ import com.ktg.mes.md.mapper.ItemTypeMapper;
 import com.ktg.mes.md.service.IItemTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,6 +24,21 @@ public class ItemTypeServiceImpl implements IItemTypeService {
     @Override
     public List<ItemType> selectItemTypeList(ItemType itemType) {
         return itemTypeMapper.selectItemTypeList(itemType);
+    }
+
+    /**
+     * 根据分类名称查找分类
+     * 在重名的情况下，支持按【上级分类】/【下级分类】的模式进行查找
+     * @param itemTypeName
+     * @return
+     */
+    @Override
+    public ItemType selectItemTypeByName(String itemTypeName) {
+        List<ItemType> types = itemTypeMapper.selectItemTypeByName(itemTypeName);
+        if(!CollectionUtils.isEmpty(types)){
+            return types.get(0);
+        }
+        return null;
     }
 
     @Override

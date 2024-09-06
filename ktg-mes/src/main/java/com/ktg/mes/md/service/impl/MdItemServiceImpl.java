@@ -48,10 +48,15 @@ public class MdItemServiceImpl implements IMdItemService {
     }
 
     @Override
+    public List<MdItem> getExeportList(MdItem mdItem) {
+        return mdItemMapper.getExeportList(mdItem);
+    }
+
+    @Override
     public String importItem(List<MdItem> itemList, Boolean isUpdateSupport, String operName) {
         if (StringUtils.isNull(itemList) || itemList.size() == 0)
         {
-            throw new ServiceException("导入供应商数据不能为空！");
+            throw new ServiceException("导入物料产品数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;
@@ -61,13 +66,17 @@ public class MdItemServiceImpl implements IMdItemService {
         {
             try{
                 //物料分类是否正确
-                if(StringUtils.isNotNull(item.getItemTypeCode())){
-                    ItemType q = new ItemType();
-                    q.setItemTypeCode(item.getItemTypeCode());
-                    List<ItemType> types = itemTypeMapper.selectItemTypeList(q);
-                    if(CollectionUtils.isEmpty(types)){
+                if(StringUtils.isNotNull(item.getItemTypeName())){
+                    List<ItemType> types = itemTypeMapper.selectItemTypeByName(item.getItemTypeName());
+                    if(!CollectionUtils.isEmpty(types)){
                         item.setItemTypeId(types.get(0).getItemTypeId());
+                        item.setItemTypeCode(types.get(0).getItemTypeCode());
                         item.setItemTypeName(types.get(0).getItemTypeName());
+                        item.setItemOrProduct(types.get(0).getItemOrProduct());
+
+                        item.setSafeStockFlag(UserConstants.NO);
+                        item.setEnableFlag(UserConstants.YES);
+                        item.setHighValue(UserConstants.NO);
 
                         //是否存在
                         MdItem v = mdItemMapper.checkItemCodeUnique(item);
@@ -90,26 +99,26 @@ public class MdItemServiceImpl implements IMdItemService {
                         }
                     }else{
                         failureNum++;
-                        failureMsg.append("<br/>" + failureNum + "、物料/产品 " + item.getItemName() + " 请填写正确的分类编码");
+                        failureMsg.append("<br/>" + failureNum + "、物料/产品 " + item.getItemName() + " 请填写正确的分类");
                     }
                 }else {
                     failureNum++;
-                    failureMsg.append("<br/>" + failureNum + "、物料/产品 " + item.getItemName() + " 请填写分类编码");
+                    failureMsg.append("<br/>" + failureNum + "、物料/产品 " + item.getItemName() + " 请填写分类");
                 }
             }catch (Exception e){
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、物料/产品 " + item.getItemName() + " 导入失败：";
                 failureMsg.append(msg + e.getMessage());
             }
-            if (failureNum > 0)
-            {
-                failureMsg.insert(0, "导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-                throw new ServiceException(failureMsg.toString());
-            }
-            else
-            {
-                successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条");
-            }
+        }
+        if (failureNum > 0)
+        {
+            failureMsg.insert(0, "导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+            throw new ServiceException(failureMsg.toString());
+        }
+        else
+        {
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条");
         }
         return successMsg.toString();
     }

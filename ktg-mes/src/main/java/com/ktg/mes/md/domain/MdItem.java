@@ -25,7 +25,6 @@ public class MdItem extends BaseEntity {
     private String unitName;
     private String itemOrProduct;
     private Long itemTypeId;
-    @Excel(name = "分类编码")
     private String itemTypeCode;
     @Excel(name = "分类名称")
     private String itemTypeName;
@@ -47,7 +46,6 @@ public class MdItem extends BaseEntity {
         this.itemId = itemId;
     }
 
-    @NotBlank(message = "物料产品编码不能为空")
     @Size(min = 0,max = 64,message = "物料产品编码长度不能超过64个字符")
     public String getItemCode() {
         return itemCode;
@@ -76,7 +74,7 @@ public class MdItem extends BaseEntity {
         this.specification = specification;
     }
 
-    @NotBlank(message = "单位不能为空")
+    @NotBlank(message = "单位编码不能为空")
     public String getUnitOfMeasure() {
         return unitOfMeasure;
     }

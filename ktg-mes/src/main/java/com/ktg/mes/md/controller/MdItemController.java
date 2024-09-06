@@ -62,7 +62,7 @@ public class MdItemController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, MdItem mdItem)
     {
-        List<MdItem> list = mdItemService.selectMdItemList(mdItem);
+        List<MdItem> list = mdItemService.getExeportList(mdItem);
         ExcelUtil<MdItem> util = new ExcelUtil<MdItem>(MdItem.class);
         util.exportExcel(response, list, "物料产品数据");
     }

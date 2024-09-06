@@ -55,6 +55,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
+	<select id="getExeportList" parameterType="MdItem" resultMap="MdItemResult">
+		select i.item_id, i.item_code, i.item_name, i.specification, i.unit_of_measure,i.unit_name, i.item_or_product,
+		i.item_type_id,i.item_type_code,i.enable_flag,i.safe_stock_flag,i.min_stock,i.max_stock,i.high_value, i.create_by, i.create_time, i.remark,CONCAT((select group_concat(item_type_name separator '/') from md_item_type b where FIND_IN_SET(CAST(item_type_id as CHAR),a.ancestors)>0),'/',a.item_type_name) as item_type_name
+		from md_item i
+		left join md_item_type a
+		on i.item_type_id  = a.item_type_id
+		<where>
+			<if test="itemCode != null and itemCode != ''">
+				AND i.item_code like concat('%', #{itemCode}, '%')
+			</if>
+			<if test="itemTypeId != null and itemTypeId != 0 ">
+				AND (i.item_type_id = #{itemTypeId} OR i.item_type_id in (select item_type_id from md_item_type where find_in_set(#{itemTypeId},ancestors)))
+			</if>
+			<if test="itemName != null and itemName != ''">
+				AND i.item_name like concat('%', #{itemName}, '%')
+			</if>
+			<if test="enableFlag != null and enableFlag != ''">
+				AND i.enable_flag = #{enableFlag}
+			</if>
+		</where>
+	</select>
+
 	<select id="selectMdItemAll" resultMap="MdItemResult">
 		<include refid="selectMdItemVo"></include>
 	</select>
@@ -80,7 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			item_name,
 			<if test="specification !=null and specification !=''">specification,</if>
 			unit_of_measure,
-		    <if test="unitName != null and unitName !=''">unitName,</if>
+		    <if test="unitName != null and unitName !=''">unit_name,</if>
 			item_or_product,
 			item_type_id,
 			<if test="itemTypeCode !=null and itemTypeCode !=''">item_type_code,</if>
@@ -89,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			safe_stock_flag,
 			<if test="safeStockFlag =='Y'.toString()">min_stock,</if>
 			<if test="safeStockFlag =='Y'.toString()">max_stock,</if>
-			<if test="highValue !=null and highValue !=''">#{high_value},</if>
+			<if test="highValue !=null and highValue !=''">high_value,</if>
 			<if test="remark !=null and remark !=''">remark,</if>
 			<if test="attr1 !=null and attr1 !=''">attr1,</if>
 			<if test="attr2 !=null and attr2 !=''">attr2,</if>

@@ -22,6 +22,14 @@ public interface ItemTypeMapper {
     public ItemType selectItemTypeById(Long itemTypeId);
 
     /**
+     * 根据分类名称查找分类
+     * 在重名的情况下，支持按【上级分类】/【下级分类】的模式进行查找
+     * @param itemTypeName
+     * @return
+     */
+    public List<ItemType> selectItemTypeByName(String itemTypeName);
+
+    /**
      * 根据父类ID查询是否有子类
      * @param parentTypeId
      * @return

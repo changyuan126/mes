@@ -9,6 +9,8 @@ public interface IItemTypeService {
 
     public List<ItemType> selectItemTypeList(ItemType itemType);
 
+    public ItemType selectItemTypeByName(String typeName);
+
     public ItemType selectItemTypeById(Long itemTypeId);
 
     public List<TreeSelect> buildTreeSelect(List<ItemType> list);
