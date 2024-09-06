@@ -1,6 +1,7 @@
 package com.ktg.mes.md.service;
 
 import com.ktg.mes.md.domain.MdItem;
+import com.ktg.mes.md.domain.MdVendor;
 
 import java.util.List;
 
@@ -19,6 +20,15 @@ public interface IMdItemService {
      */
     public List<MdItem> selectMdItemAll();
 
+
+    /**
+     * 导入物料信息
+     * @param vendorList
+     * @param isUpdateSupport
+     * @param operName
+     * @return
+     */
+    public String importItem(List<MdItem> itemList, Boolean isUpdateSupport, String operName);
 
     /**
      * 根据主键查询物料编码

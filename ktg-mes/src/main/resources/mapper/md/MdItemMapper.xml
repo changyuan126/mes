@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="itemName"      column="item_name"     />
 		<result property="specification"      column="specification"     />
 		<result property="unitOfMeasure"        column="unit_of_measure"        />
+		<result property="unitName"        column="unit_name"        />
 		<result property="itemOrProduct"        column="item_or_product"        />
 		<result property="itemTypeId"        column="item_type_id"        />
 		<result property="itemTypeCode"        column="item_type_code"        />
@@ -31,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="selectMdItemVo">
-        select item_id, item_code, item_name, specification, unit_of_measure, item_or_product,
+        select item_id, item_code, item_name, specification, unit_of_measure,unit_name, item_or_product,
         item_type_id,item_type_code,item_type_name,enable_flag,safe_stock_flag,min_stock,max_stock,high_value, create_by, create_time, remark
 		from md_item
     </sql>
@@ -79,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			item_name,
 			<if test="specification !=null and specification !=''">specification,</if>
 			unit_of_measure,
+		    <if test="unitName != null and unitName !=''">unitName,</if>
 			item_or_product,
 			item_type_id,
 			<if test="itemTypeCode !=null and itemTypeCode !=''">item_type_code,</if>
@@ -101,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{itemName},
 			<if test="specification !=null and specification !=''">#{specification},</if>
 			#{unitOfMeasure},
+			<if test="unitName != null and unitName !=''">#{unitName},</if>
 			#{itemOrProduct},
 			#{itemTypeId},
 			<if test="itemTypeCode !=null and itemTypeCode !=''">#{itemTypeCode},</if>
@@ -129,6 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="itemTypeName !=null and itemTypeName !=''">item_type_name = #{itemTypeName},</if>
 			<if test="specification !=null and specification !=''">specification = #{specification},</if>
 			<if test="unitOfMeasure !=null and unitOfMeasure !=''">unit_of_measure = #{unitOfMeasure},</if>
+			<if test="unitName != null and unitName !=''">unit_name = #{unitName},</if>
 			<if test="itemOrProduct !=null and itemOrProduct !=''">item_or_product = #{itemOrProduct},</if>
 			<if test="enableFlag !=null and enableFlag !=''">enable_flag = #{enableFlag},</if>
 			<if test="safeStockFlag !=null and safeStockFlag !=''">safe_stock_flag = #{safeStockFlag},</if>

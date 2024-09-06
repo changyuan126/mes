@@ -47,7 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectMdUnitMeasureVo"/>
         where measure_id = #{measureId}
     </select>
-        
+
+    <select id="selectMdUnitByCode" parameterType="String" resultMap="MdUnitMeasureResult">
+        <include refid="selectMdUnitMeasureVo"/>
+        where measure_code = #{unitCode}
+    </select>
+
     <insert id="insertMdUnitMeasure" parameterType="MdUnitMeasure" useGeneratedKeys="true" keyProperty="measureId">
         insert into md_unit_measure
         <trim prefix="(" suffix=")" suffixOverrides=",">

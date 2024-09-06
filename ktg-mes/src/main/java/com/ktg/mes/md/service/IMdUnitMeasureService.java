@@ -29,6 +29,13 @@ public interface IMdUnitMeasureService
     public List<MdUnitMeasure> selectMdUnitMeasureList(MdUnitMeasure mdUnitMeasure);
 
     /**
+     * 根据单位编码查询单位名称
+     * @param unitCode
+     * @return
+     */
+    public MdUnitMeasure selectMdUnitByCode(String unitCode);
+
+    /**
      * 新增单位
      * 
      * @param mdUnitMeasure 单位

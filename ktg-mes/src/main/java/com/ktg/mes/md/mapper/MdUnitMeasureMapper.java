@@ -28,6 +28,8 @@ public interface MdUnitMeasureMapper
      */
     public List<MdUnitMeasure> selectMdUnitMeasureList(MdUnitMeasure mdUnitMeasure);
 
+    public MdUnitMeasure selectMdUnitByCode(String unitCode);
+
     /**
      * 新增单位
      * 

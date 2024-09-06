@@ -45,6 +45,11 @@ public class MdUnitMeasureServiceImpl implements IMdUnitMeasureService
         return mdUnitMeasureMapper.selectMdUnitMeasureList(mdUnitMeasure);
     }
 
+    @Override
+    public MdUnitMeasure selectMdUnitByCode(String unitCode) {
+        return mdUnitMeasureMapper.selectMdUnitByCode(unitCode);
+    }
+
     /**
      * 新增单位
      * 

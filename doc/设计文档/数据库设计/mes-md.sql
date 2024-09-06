@@ -7,7 +7,8 @@ create table md_item (
   item_code         varchar(64)     not null                   comment '产品物料编码',
   item_name         varchar(255)    not null                   comment '产品物料名称',
   specification     varchar(500)    default null               comment '规格型号',
-  unit_of_measure   varchar(64)     not null                   comment '单位',
+  unit_of_measure   varchar(64)     not null                   comment '单位编码',
+  unit_name         varchar(64)                                comment '单位名称'
   item_or_product   varchar(20)     not null                   comment '产品物料标识',
   item_type_id      bigint(20)      default 0                  comment '物料类型ID',
   item_type_code    varchar(64)     default ''                 comment '物料类型编码',

@@ -1,5 +1,6 @@
 package com.ktg.mes.md.domain;
 
+import com.ktg.common.annotation.Excel;
 import com.ktg.common.core.domain.BaseEntity;
 
 import javax.validation.constraints.NotBlank;
@@ -12,19 +13,27 @@ public class MdItem extends BaseEntity {
 
 
     private Long itemId;
+    @Excel(name = "物料/产品编码")
     private String itemCode;
+    @Excel(name = "物料/产品名称")
     private String itemName;
+    @Excel(name = "规格型号")
     private String specification;
+    @Excel(name = "单位编码")
     private String unitOfMeasure;
+    @Excel(name = "单位名称")
+    private String unitName;
     private String itemOrProduct;
     private Long itemTypeId;
+    @Excel(name = "分类编码")
     private String itemTypeCode;
+    @Excel(name = "分类名称")
     private String itemTypeName;
     private String enableFlag;
     private String safeStockFlag;
     private Double minStock;
     private Double maxStock;
-    private String hightValue;
+    private String highValue;
     private String attr1;
     private String attr2;
     private String attr3;
@@ -76,6 +85,13 @@ public class MdItem extends BaseEntity {
         this.unitOfMeasure = unitOfMeasure;
     }
 
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
     public String getItemOrProduct() {
         return itemOrProduct;
@@ -142,12 +158,12 @@ public class MdItem extends BaseEntity {
         this.maxStock = maxStock;
     }
 
-    public String getHightValue() {
-        return hightValue;
+    public String getHighValue() {
+        return highValue;
     }
 
-    public void setHightValue(String hightValue) {
-        this.hightValue = hightValue;
+    public void setHighValue(String highValue) {
+        this.highValue = highValue;
     }
 
     public String getAttr1() {
