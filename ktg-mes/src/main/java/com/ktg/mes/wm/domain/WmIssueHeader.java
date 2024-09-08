@@ -107,8 +107,8 @@ public class WmIssueHeader extends BaseEntity
     private String areaName;
 
     /** 领料日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "领料日期", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    @Excel(name = "领料日期", width = 30, dateFormat = "yyyy-MM-dd hh:mm")
     private Date issueDate;
 
     /** 单据状态 */
