@@ -118,6 +118,8 @@ public class WmStorageLocationController extends BaseController
 	@DeleteMapping("/{locationIds}")
     public AjaxResult remove(@PathVariable Long[] locationIds)
     {
+        //TODO:库区删除之前的逻辑校验
+
         for (Long locationId: locationIds
              ) {
             wmStorageAreaService.deleteByLocationId(locationId);

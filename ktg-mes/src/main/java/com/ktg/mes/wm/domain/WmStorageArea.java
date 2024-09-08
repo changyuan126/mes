@@ -55,6 +55,8 @@ public class WmStorageArea extends BaseEntity
     @Excel(name = "是否启用")
     private String enableFlag;
 
+    private String frozenFlag;
+
     /** 预留字段1 */
     private String attr1;
 
@@ -157,7 +159,16 @@ public class WmStorageArea extends BaseEntity
     {
         return enableFlag;
     }
-    public void setAttr1(String attr1) 
+
+    public String getFrozenFlag() {
+        return frozenFlag;
+    }
+
+    public void setFrozenFlag(String frozenFlag) {
+        this.frozenFlag = frozenFlag;
+    }
+
+    public void setAttr1(String attr1)
     {
         this.attr1 = attr1;
     }

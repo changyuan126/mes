@@ -124,20 +124,22 @@ public class WmMaterialStock extends BaseEntity
     @Excel(name = "库存有效期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date expireDate;
 
+    /**
+     * 是否冻结
+     */
+    @Excel(name = "是否冻结")
+    private String frozenFlag;
+
     /** 预留字段1 */
-    @Excel(name = "预留字段1")
     private String attr1;
 
     /** 预留字段2 */
-    @Excel(name = "预留字段2")
     private String attr2;
 
     /** 预留字段3 */
-    @Excel(name = "预留字段3")
     private Long attr3;
 
     /** 预留字段4 */
-    @Excel(name = "预留字段4")
     private Long attr4;
 
     public void setMaterialStockId(Long materialStockId) 
@@ -372,7 +374,16 @@ public class WmMaterialStock extends BaseEntity
     {
         return expireDate;
     }
-    public void setAttr1(String attr1) 
+
+    public String getFrozenFlag() {
+        return frozenFlag;
+    }
+
+    public void setFrozenFlag(String frozenFlag) {
+        this.frozenFlag = frozenFlag;
+    }
+
+    public void setAttr1(String attr1)
     {
         this.attr1 = attr1;
     }

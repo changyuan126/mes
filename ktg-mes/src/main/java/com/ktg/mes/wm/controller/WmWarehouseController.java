@@ -133,6 +133,9 @@ public class WmWarehouseController extends BaseController
 	@DeleteMapping("/{warehouseIds}")
     public AjaxResult remove(@PathVariable Long[] warehouseIds)
     {
+
+        //TODO:仓库删除之前的逻辑校验
+
         for (Long wahouseId: warehouseIds
              ) {
             wmStorageLocationService.deleteByWarehouseId(wahouseId);

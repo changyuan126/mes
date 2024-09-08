@@ -106,6 +106,8 @@ public class WmStorageAreaController extends BaseController
 	@DeleteMapping("/{areaIds}")
     public AjaxResult remove(@PathVariable Long[] areaIds)
     {
+        //TODO:库位删除之前的逻辑校验
+
         return toAjax(wmStorageAreaService.deleteWmStorageAreaByAreaIds(areaIds));
     }
 }

@@ -41,6 +41,8 @@ public class WmWarehouse extends BaseEntity
     @Excel(name = "负责人")
     private String charge;
 
+    private String frozenFlag;
+
     /** 预留字段1 */
     private String attr1;
 
@@ -109,7 +111,16 @@ public class WmWarehouse extends BaseEntity
     {
         return charge;
     }
-    public void setAttr1(String attr1) 
+
+    public String getFrozenFlag() {
+        return frozenFlag;
+    }
+
+    public void setFrozenFlag(String frozenFlag) {
+        this.frozenFlag = frozenFlag;
+    }
+
+    public void setAttr1(String attr1)
     {
         this.attr1 = attr1;
     }

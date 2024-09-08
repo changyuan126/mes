@@ -15,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="positionY"    column="position_y"    />
         <result property="positionZ"    column="position_z"    />
         <result property="enableFlag"    column="enable_flag"    />
+        <result property="frozenFlag"    column="frozen_flag"    />
         <result property="remark"    column="remark"    />
         <result property="attr1"    column="attr1"    />
         <result property="attr2"    column="attr2"    />
@@ -27,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectWmStorageAreaVo">
-        select area_id, area_code, area_name, location_id, area, max_loa, position_x, position_y, position_z, enable_flag, remark, attr1, attr2, attr3, attr4, create_by, create_time, update_by, update_time from wm_storage_area
+        select area_id, area_code, area_name, location_id, area, max_loa, position_x, position_y, position_z, enable_flag, frozen_flag, remark, attr1, attr2, attr3, attr4, create_by, create_time, update_by, update_time from wm_storage_area
     </sql>
 
     <select id="selectWmStorageAreaList" parameterType="WmStorageArea" resultMap="WmStorageAreaResult">
@@ -67,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="positionY != null">position_y,</if>
             <if test="positionZ != null">position_z,</if>
             <if test="enableFlag != null">enable_flag,</if>
+            <if test="frozenFlag != null">frozen_flag,</if>
             <if test="remark != null">remark,</if>
             <if test="attr1 != null">attr1,</if>
             <if test="attr2 != null">attr2,</if>
@@ -87,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="positionY != null">#{positionY},</if>
             <if test="positionZ != null">#{positionZ},</if>
             <if test="enableFlag != null">#{enableFlag},</if>
+            <if test="frozenFlag != null">#{frozenFlag},</if>
             <if test="remark != null">#{remark},</if>
             <if test="attr1 != null">#{attr1},</if>
             <if test="attr2 != null">#{attr2},</if>
@@ -111,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="positionY != null">position_y = #{positionY},</if>
             <if test="positionZ != null">position_z = #{positionZ},</if>
             <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="frozenFlag != null">frozen_flag = #{frozenFlag},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="attr1 != null">attr1 = #{attr1},</if>
             <if test="attr2 != null">attr2 = #{attr2},</if>

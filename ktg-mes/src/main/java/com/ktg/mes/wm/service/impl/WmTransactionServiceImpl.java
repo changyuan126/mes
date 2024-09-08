@@ -4,18 +4,21 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.ktg.common.constant.UserConstants;
 import com.ktg.common.exception.BussinessException;
 import com.ktg.common.utils.DateUtils;
 import com.ktg.common.utils.StringUtils;
 import com.ktg.mes.md.domain.MdItem;
 import com.ktg.mes.md.mapper.MdItemMapper;
-import com.ktg.mes.wm.domain.WmMaterialStock;
+import com.ktg.mes.wm.domain.*;
 import com.ktg.mes.wm.mapper.WmMaterialStockMapper;
+import com.ktg.mes.wm.service.IWmStorageAreaService;
+import com.ktg.mes.wm.service.IWmStorageLocationService;
+import com.ktg.mes.wm.service.IWmWarehouseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ktg.mes.wm.mapper.WmTransactionMapper;
-import com.ktg.mes.wm.domain.WmTransaction;
 import com.ktg.mes.wm.service.IWmTransactionService;
 
 /**
@@ -27,6 +30,15 @@ import com.ktg.mes.wm.service.IWmTransactionService;
 @Service
 public class WmTransactionServiceImpl implements IWmTransactionService 
 {
+    @Autowired
+    private IWmWarehouseService wmWarehouseService;
+
+    @Autowired
+    private IWmStorageLocationService wmStorageLocationService;
+
+    @Autowired
+    private IWmStorageAreaService wmStorageAreaService;
+
     @Autowired
     private WmTransactionMapper wmTransactionMapper;
 
@@ -40,10 +52,12 @@ public class WmTransactionServiceImpl implements IWmTransactionService
     public synchronized WmTransaction processTransaction(WmTransaction wmTransaction) {
         WmMaterialStock stock = new WmMaterialStock();
 
-        validate(wmTransaction);
-        initStock(wmTransaction,stock);
+        validate(wmTransaction); //先效验业务传递的库存事务参数是否完整
+        initStock(wmTransaction,stock); //用库存事务来初始化一个MSD对象
 
-        WmMaterialStock ms =wmMaterialStockMapper.loadMaterialStock(stock);
+        WmMaterialStock ms =wmMaterialStockMapper.loadMaterialStock(stock); //用MSD对象查询库存现有量，看是否已经存在相应的记录；如果存在则只对数量进行更新，不存在则需要新增MSD。
+
+        checkFrozen(ms,stock); //冻结检测
         BigDecimal quantity = wmTransaction.getTransactionQuantity().multiply(new BigDecimal(wmTransaction.getTransactionFlag()));
         if(StringUtils.isNotNull(ms)){
             //MS已存在
@@ -56,6 +70,9 @@ public class WmTransactionServiceImpl implements IWmTransactionService
             wmMaterialStockMapper.updateWmMaterialStock(stock);
         }else {
             //MS不存在
+
+            //TODO:需要为库存增加一个效验逻辑：同一个库位上不能放不同批次和属性的物资
+
             stock.setQuantityOnhand(quantity);
             wmMaterialStockMapper.insertWmMaterialStock(stock);
         }
@@ -87,6 +104,7 @@ public class WmTransactionServiceImpl implements IWmTransactionService
             transaction.setTransactionDate(new Date());
         }
     }
+
 
     public void initStock(WmTransaction transaction,WmMaterialStock stock){
 
@@ -133,6 +151,36 @@ public class WmTransactionServiceImpl implements IWmTransactionService
                 stock.setWorkorderCode(transaction.getWorkorderCode());
             }
             stock.setExpireDate(transaction.getExpireDate());
+        }
+    }
+
+    /**
+     * 检查库存冻结情况
+     * @param ms
+     */
+    private void checkFrozen(WmMaterialStock ms,WmMaterialStock org){
+        //检查仓库冻结
+        WmWarehouse warehouse = wmWarehouseService.selectWmWarehouseByWarehouseId(org.getWarehouseId());
+        if(UserConstants.YES.equals(warehouse.getFrozenFlag())){
+            throw new BussinessException("仓库"+warehouse.getWarehouseName()+"已被冻结！");
+        }
+        //检查库区冻结
+        WmStorageLocation location = wmStorageLocationService.selectWmStorageLocationByLocationId(org.getLocationId());
+        if(UserConstants.YES.equals(location.getFrozenFlag())){
+            throw new BussinessException("库区"+location.getLocationName()+"已被冻结！");
+        }
+        //检查库位冻结
+        WmStorageArea area = wmStorageAreaService.selectWmStorageAreaByAreaId(org.getAreaId());
+        if(UserConstants.YES.equals(area.getFrozenFlag())){
+            throw new BussinessException("库位"+area.getAreaName()+"已被冻结！");
+        }
+        //检查具体的MS冻结
+        if(ms!=null && StringUtils.isNotNull(ms.getMaterialStockId())){
+            if(UserConstants.YES.equals(ms.getFrozenFlag())){
+                throw new BussinessException(new StringBuilder("存放于").append(ms.getWarehouseName()).append("/")
+                        .append(ms.getLocationName()).append("/").append(ms.getAreaName()).append("下的")
+                        .append(ms.getItemName()).append("已被冻结！").toString());
+            }
         }
     }
 

@@ -228,6 +228,7 @@ public class StorageCoreServiceImpl implements IStorageCoreService {
      * 库存消耗
      *
      */
+    @Override
     public void processItemConsume(List<ItemConsumeTxBean> lines){
         if(CollUtil.isEmpty(lines)){
             throw new BussinessException("没有需要处理的原料消耗单行");
@@ -263,6 +264,7 @@ public class StorageCoreServiceImpl implements IStorageCoreService {
      * 产品产出
      *
      */
+    @Override
     public void processProductProduce(List<ProductProductTxBean> lines){
         if(CollUtil.isEmpty(lines)){
             throw new BussinessException("没有需要处理的产品产出单行");
