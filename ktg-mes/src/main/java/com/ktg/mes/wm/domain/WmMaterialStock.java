@@ -50,11 +50,9 @@ public class WmMaterialStock extends BaseEntity
     private String batchCode;
 
     /** 仓库ID */
-    @Excel(name = "仓库ID")
     private Long warehouseId;
 
     /** 仓库编码 */
-    @Excel(name = "仓库编码")
     private String warehouseCode;
 
     /** 仓库名称 */
@@ -62,11 +60,9 @@ public class WmMaterialStock extends BaseEntity
     private String warehouseName;
 
     /** 库区ID */
-    @Excel(name = "库区ID")
     private Long locationId;
 
     /** 库区编码 */
-    @Excel(name = "库区编码")
     private String locationCode;
 
     /** 库区名称 */
@@ -74,11 +70,9 @@ public class WmMaterialStock extends BaseEntity
     private String locationName;
 
     /** 库位ID */
-    @Excel(name = "库位ID")
     private Long areaId;
 
     /** 库位编码 */
-    @Excel(name = "库位编码")
     private String areaCode;
 
     /** 库位名称 */
@@ -86,7 +80,6 @@ public class WmMaterialStock extends BaseEntity
     private String areaName;
 
     /** 供应商ID */
-    @Excel(name = "供应商ID")
     private Long vendorId;
 
     /** 供应商编号 */
@@ -113,6 +106,12 @@ public class WmMaterialStock extends BaseEntity
     /** 生产工单编号 */
     @Excel(name = "生产工单编号")
     private String workorderCode;
+
+    /** 生产日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "生产日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date productionDate;
+
 
     /** 库存有效期 */
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
@@ -373,6 +372,14 @@ public class WmMaterialStock extends BaseEntity
     public Date getExpireDate() 
     {
         return expireDate;
+    }
+
+    public Date getProductionDate() {
+        return productionDate;
+    }
+
+    public void setProductionDate(Date productionDate) {
+        this.productionDate = productionDate;
     }
 
     public String getFrozenFlag() {

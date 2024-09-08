@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="workorderId" column="workorder_id"></result>
         <result property="workorderCode" column="workorder_code"></result>
         <result property="expireDate"    column="expire_date"    />
+        <result property="productionDate"    column="production_date"    />
         <result property="frozenFlag"    column="frozen_flag"    />
         <result property="attr1"    column="attr1"    />
         <result property="attr2"    column="attr2"    />
@@ -43,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectWmMaterialStockVo">
-        select material_stock_id, item_type_id, item_id, item_code, item_name, specification, unit_of_measure, batch_code, warehouse_id, warehouse_code, warehouse_name, location_id, location_code, location_name, area_id, area_code, area_name, vendor_id, vendor_code, vendor_name, vendor_nick, quantity_onhand,recpt_date,workorder_id,workorder_code, expire_date, frozen_flag, attr1, attr2, attr3, attr4, create_by, create_time, update_by, update_time from wm_material_stock
+        select material_stock_id, item_type_id, item_id, item_code, item_name, specification, unit_of_measure, batch_code, warehouse_id, warehouse_code, warehouse_name, location_id, location_code, location_name, area_id, area_code, area_name, vendor_id, vendor_code, vendor_name, vendor_nick, quantity_onhand,recpt_date,workorder_id,workorder_code, expire_date, production_date,frozen_flag, attr1, attr2, attr3, attr4, create_by, create_time, update_by, update_time from wm_material_stock
     </sql>
 
     <select id="selectWmMaterialStockList" parameterType="WmMaterialStock" resultMap="WmMaterialStockResult">
@@ -172,6 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="workorderId !=null">workorder_id,</if>
             <if test="workorderCode !=null">workorder_code,</if>
             <if test="expireDate != null">expire_date,</if>
+            <if test="productionDate != null">production_date,</if>
             <if test="frozenFlag !=null ">frozen_flag,</if>
             <if test="attr1 != null">attr1,</if>
             <if test="attr2 != null">attr2,</if>
@@ -208,6 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="workorderId !=null">#{workorderId},</if>
             <if test="workorderCode !=null">#{workorderCode},</if>
             <if test="expireDate != null">#{expireDate},</if>
+            <if test="productionDate != null">#{productionDate},</if>
             <if test="frozenFlag !=null ">#{frozenFlag}, </if>
             <if test="attr1 != null">#{attr1},</if>
             <if test="attr2 != null">#{attr2},</if>
@@ -248,6 +251,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="workorderId !=null">workorder_id = #{workorderId},</if>
             <if test="workorderCode !=null">workorder_code = #{workorderCode},</if>
             <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="productionDate != null">production_date = #{productionDate},</if>
             <if test="frozenFlag !=null ">frozen_flag = #{frozenFlag}, </if>
             <if test="attr1 != null">attr1 = #{attr1},</if>
             <if test="attr2 != null">attr2 = #{attr2},</if>
