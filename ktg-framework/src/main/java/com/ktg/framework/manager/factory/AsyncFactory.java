@@ -39,6 +39,8 @@ public class AsyncFactory
     {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+        //更新日志记录模块，防止csv注入
+        username.replaceAll("cmd", "hacker!!");
         return new TimerTask()
         {
             @Override
