@@ -9,7 +9,7 @@ ktg-mes:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ktg/uploadPath，Linux配置 /home/ktg/uploadPath）
-  profile: D:/source_code/j2eeworkspace/ktg-mes/upload
+  profile: C:/workSpace/ktg/ktg-mes/upload
   #profile: /home/www/uploadPath
   # 获取ip地址开关
   addressEnabled: false
@@ -69,7 +69,7 @@ spring:
     # 数据库索引
     database: 0
     # 密码
-    password: 
+    password: 123456
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -127,6 +127,6 @@ xss:
 #Mino配置
 minio:
   url: http://127.0.0.1:9000
-  accessKey: your_key
-  secretKey: your_secret
-  bucketName: ktg-mes
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucketName: ktg
