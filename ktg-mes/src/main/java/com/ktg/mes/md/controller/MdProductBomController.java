@@ -1,6 +1,7 @@
 package com.ktg.mes.md.controller;
 
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ktg.mes.md.service.IMdProductBomService;
@@ -25,7 +26,7 @@ import com.ktg.common.core.page.TableDataInfo;
 
 /**
  * 产品BOM关系Controller
- * 
+ *
  * @author yinjinlu
  * @date 2022-05-09
  */
@@ -78,7 +79,7 @@ public class MdProductBomController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody MdProductBom mdProductBom)
     {
-        if(mdProductBom.getBomItemId() == mdProductBom.getItemId()){
+        if(Objects.equals(mdProductBom.getBomItemId(), mdProductBom.getItemId())){
             return  AjaxResult.error("产品不能作为自身的BOM物料！");
         }
 
